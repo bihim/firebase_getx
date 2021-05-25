@@ -5,9 +5,14 @@ import 'package:get/get.dart';
 
 class TodoScreen extends StatelessWidget {
   final TodoControllers todoControllers = Get.find<TodoControllers>();
+  final int? index;
+  TodoScreen({this.index});
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingController = TextEditingController();
+    String? text = this.index == null ? "" : todoControllers.todos[index!].text;
+    TextEditingController textEditingController = TextEditingController(
+      text: text,
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text("Flutter Firebase"),
@@ -47,11 +52,23 @@ class TodoScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      todoControllers.todos.add(
-                          Todo(text: textEditingController.text, done: false));
-                      Get.back();
+                      String text = textEditingController.text.toString();
+                      if (text.isNotEmpty) {
+                        if (this.index == null) {
+                          todoControllers.todos.add(
+                            Todo(text: textEditingController.text, done: false),
+                          );
+                        } else {
+                          var editing = todoControllers.todos[index!];
+                          editing.text = textEditingController.text;
+                          todoControllers.todos[index!] = editing;
+                        }
+                        Get.back();
+                      }
                     },
-                    child: Text("Add"),
+                    child: Text(
+                      (this.index == null ? "Add" : "Edit"),
+                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green),
                     ),

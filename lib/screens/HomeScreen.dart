@@ -7,7 +7,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TodoControllers todoControllers = Get.put(TodoControllers());
-
     return Scaffold(
       appBar: AppBar(
         title: Text("GetX todo list"),
@@ -17,8 +16,8 @@ class HomeScreen extends StatelessWidget {
           () => ListView.separated(
               itemBuilder: (context, index) => ListTile(
                     title: Text(
-                      todoControllers.todos[index].text,
-                      style: (todoControllers.todos[index].done)
+                      todoControllers.todos[index].text!,
+                      style: (todoControllers.todos[index].done!)
                           ? TextStyle(
                               color: Colors.red,
                               decoration: TextDecoration.lineThrough,
@@ -27,8 +26,14 @@ class HomeScreen extends StatelessWidget {
                               color:
                                   Theme.of(context).textTheme.bodyText1!.color),
                     ),
-                    onTap: () {},
-                    trailing: Checkbox(
+                    onTap: () {
+                      Get.to(
+                        TodoScreen(
+                          index: index,
+                        ),
+                      );
+                    },
+                    leading: Checkbox(
                       value: todoControllers.todos[index].done,
                       onChanged: (v) {
                         var changed = todoControllers.todos[index];
@@ -36,6 +41,7 @@ class HomeScreen extends StatelessWidget {
                         todoControllers.todos[index] = changed;
                       },
                     ),
+                    trailing: Icon(Icons.chevron_right),
                   ),
               separatorBuilder: (_, __) => Divider(),
               itemCount: todoControllers.todos.length),
