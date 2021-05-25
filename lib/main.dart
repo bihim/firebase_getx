@@ -1,3 +1,4 @@
+import 'package:firebase_getx/screens/HomeScreen.dart';
 import 'package:firebase_getx/screens/TodoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TodoScreen(),
+      home: HomeScreen(),
     );
   }
 }
