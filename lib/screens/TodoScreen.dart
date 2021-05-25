@@ -1,8 +1,13 @@
+import 'package:firebase_getx/controllers/TodoControllers.dart';
+import 'package:firebase_getx/models/Todo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TodoScreen extends StatelessWidget {
+  final TodoControllers todoControllers = Get.find<TodoControllers>();
   @override
   Widget build(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text("Flutter Firebase"),
@@ -14,6 +19,7 @@ class TodoScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
+                  controller: textEditingController,
                   autofocus: true,
                   decoration: InputDecoration(
                     hintText: "What is on your mind?",
@@ -31,14 +37,20 @@ class TodoScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.back();
+                    },
                     child: Text("Cancel"),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      todoControllers.todos.add(
+                          Todo(text: textEditingController.text, done: false));
+                      Get.back();
+                    },
                     child: Text("Add"),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green),
