@@ -1,4 +1,5 @@
 import 'package:firebase_getx/controllers/TodoControllers.dart';
+import 'package:firebase_getx/screens/TodoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +41,12 @@ class HomeScreen extends StatelessWidget {
               itemCount: todoControllers.todos.length),
         ),
       ),
-      floatingActionButton: FloatingActionButton(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Get.to(TodoScreen());
+        },
+      ),
     );
   }
 }
